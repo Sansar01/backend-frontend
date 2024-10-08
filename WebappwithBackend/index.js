@@ -29,6 +29,12 @@ app.post("/create", function (req, res) {
   );
   res.redirect('/')
 });
+
+app.get('/files/:filename',function(req,res){
+  fs.readFile(`./files/${req.params.filename}.txt`, 'utf8', function(err,filedata){
+    res.render('show',{filename:req.params.filename,filedata:filedata})
+  })
+})
 app.listen(5000, () => {
   console.log("Server is running on port : 5000");
 });
