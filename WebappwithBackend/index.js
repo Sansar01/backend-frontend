@@ -2,7 +2,8 @@ const express = require("express");
 const app = express();
 const path = require("path");
 const fs = require("fs");
-const cookieParser = require('cookie-parser')
+const cookieParser = require('cookie-parser');
+const upload = require("./utils/mutler");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -17,14 +18,19 @@ app.set("view engine", "ejs");
 
 
 app.get('/',function(req,res){
-  res.cookie('name','Sansar')
-  res.send("Hello,Welcome ");
+  // res.cookie('name','Sansar')
+  // res.send("Hello,Welcome ");
+  res.render('index')
 })
 
 app.get('/cookie',function(req,res){
   res.send("This is cookie data store on your browser")
   console.log(req.cookies);
   
+})
+
+app.post('/upload',upload.single('image'),(req,res)=>{
+  res.send(`${req.file.filename}`)
 })
 
 // app.get("/", function (req, res) {
